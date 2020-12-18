@@ -1,0 +1,30 @@
+<script src="https://unpkg.com/magic-string@0.25.7/dist/magic-string.umd.js"></script>
+
+<script>
+function addStyle (filename, css) {
+  const sourceMap = new MagicString(css).generateMap({
+    source: filename
+  })
+
+  css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+
+  document.head.appendChild(document.createElement('style')).innerHTML = css
+}
+
+function main () {
+  addStyle('https://cvzi.github.io/stackoverflow/65274147/mystyle.css', `body{
+    font-family:sans-serif;
+    color:black;
+    background:green;
+   }
+  body h1{
+    color:white;
+    size:15;
+  }
+  `)
+}
+</script>
+<body onload="main()">
+  <h1>This is h1</h1>
+</body>
